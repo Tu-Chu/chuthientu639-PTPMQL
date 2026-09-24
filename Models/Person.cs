@@ -8,8 +8,8 @@ namespace DemoMVC.Models
     public class Person
     {
         [Key]
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
+        public int PersonId { get; set; }
+        public required string FullName { get; set; }
+        public int Address { get; set; }
     }
 }

@@ -8,3 +8,13 @@ C:\Users\Admin\Desktop\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.MvcApplicationP
 C:\Users\Admin\Desktop\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.RazorAssemblyInfo.cache
 C:\Users\Admin\Desktop\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.RazorAssemblyInfo.cs
 C:\Users\Admin\Desktop\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.sourcelink.json
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.csproj.AssemblyReference.cache
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\rpswa.dswa.cache.json
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.GeneratedMSBuildEditorConfig.editorconfig
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.AssemblyInfoInputs.cache
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.AssemblyInfo.cs
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.csproj.CoreCompileInputs.cache
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.MvcApplicationPartsAssemblyInfo.cache
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.RazorAssemblyInfo.cache
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.RazorAssemblyInfo.cs
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.sourcelink.json

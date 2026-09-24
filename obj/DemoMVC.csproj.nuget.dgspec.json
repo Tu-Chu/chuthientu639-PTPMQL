@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Desktop\\Netcore\\DemoMVC\\DemoMVC.csproj": {}
+    "D:\\Netcore\\Netcore\\DemoMVC\\DemoMVC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Desktop\\Netcore\\DemoMVC\\DemoMVC.csproj": {
+    "D:\\Netcore\\Netcore\\DemoMVC\\DemoMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\Netcore\\DemoMVC\\DemoMVC.csproj",
+        "projectUniqueName": "D:\\Netcore\\Netcore\\DemoMVC\\DemoMVC.csproj",
         "projectName": "DemoMVC",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\Netcore\\DemoMVC\\DemoMVC.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\Netcore\\DemoMVC\\obj\\",
+        "projectPath": "D:\\Netcore\\Netcore\\DemoMVC\\DemoMVC.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Netcore\\Netcore\\DemoMVC\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"

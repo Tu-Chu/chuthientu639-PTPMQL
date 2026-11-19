@@ -16,3 +16,4 @@ namespace MvcAjaxCrud.Models
         [Range(0, int.MaxValue, ErrorMessage = "Số lượng không hợp lệ")]
         public int Stock { get; set; }
     }
+}

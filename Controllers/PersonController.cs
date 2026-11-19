@@ -39,13 +39,8 @@ namespace DemoMVC.Controllers
             return View(person);
         }
 
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var person = await _context.Person.FindAsync(id);
 
             if (person == null)
@@ -59,7 +54,7 @@ namespace DemoMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
-            string id,
+            int id,
             [Bind("PersonId,FullName,Address")] Person person)
         {
             if (id != person.PersonId)
@@ -92,13 +87,8 @@ namespace DemoMVC.Controllers
             return View(person);
         }
 
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var person = await _context.Person
                 .FirstOrDefaultAsync(m => m.PersonId == id);
 
@@ -112,7 +102,7 @@ namespace DemoMVC.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var person = await _context.Person.FindAsync(id);
 
@@ -126,7 +116,7 @@ namespace DemoMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PersonExists(string id)
+        private bool PersonExists(int id)
         {
             return _context.Person.Any(e => e.PersonId == id);
         }

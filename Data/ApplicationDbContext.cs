@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using DemoMVC.Models;
+using MvcAjaxModalCrud.Models;
 
 namespace DemoMVC.Data
 {
@@ -10,5 +11,8 @@ namespace DemoMVC.Data
         }
 
         public DbSet<Person> Person { get; set; }
+        public DbSet<Khoa> Khoa { get; set; }
+        public DbSet<SinhVien> SinhVien { get; set; }
+        public DbSet<Employee> Employees => Set<Employee>();
     }
 }

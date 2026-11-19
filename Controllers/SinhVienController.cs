@@ -28,7 +28,7 @@ public class SinhVienController : Controller
     {
         // Giả sử quy tắc sinh mã cho năm 2028, hệ chính quy (21), ngành học theo mã khoa (ví dụ CNTT tương ứng 05)[cite: 3]
         string namNhapHoc = "28"; // 2 năm cuối của năm 2028
-        string heDaoTao = "21"; base,  // Đại học chính quy
+        string heDaoTao = "21"; // Đại học chính quy
         string maNganh = "05";    // Ví dụ mã ngành Công nghệ thông tin
 
         string tienTo = namNhapHoc + heDaoTao + maNganh; // Ví dụ: "282105"
@@ -43,8 +43,8 @@ public class SinhVienController : Controller
         if (svCuoiCung != null)
         {
             // Lấy 4 chữ số cuối ra và chuyển thành số nguyên, sau đó cộng thêm 1
-            string 4SoCuoiStr = svCuoiCung.MaSinhVien.Substring(svCuoiCung.MaSinhVien.Length - 4);
-            if (int.TryParse(4SoCuoiStr, out int sttCuoi))
+            string lastFourDigits = svCuoiCung.MaSinhVien.Substring(svCuoiCung.MaSinhVien.Length - 4);
+            if (int.TryParse(lastFourDigits, out int sttCuoi))
             {
                 stt = sttCuoi + 1;
             }

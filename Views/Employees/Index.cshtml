@@ -1,89 +1,84 @@
 @{
-    ViewData["Title"] = "Quản lý Nhân viên (Modal + AJAX)";
+    ViewData["Title"] = "CRUD nhân viên với AJAX";
 }
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Danh sách nhân viên</h2>
-        <button type="button" class="btn btn-primary" id="btnAddNew">+ Thêm nhân viên</button>
-    </div>
-
-    <div id="alertBox" class="alert alert-success d-none" role="alert"></div>
-
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Phòng ban</th>
-                <th>Lương</th>
-                <th style="width: 170px;">Thao tác</th>
-            </tr>
-        </thead>
-        <tbody id="employeeTbody"></tbody>
-    </table>
-</div>
-
-<!-- MODAL 1: THÊM / SỬA -->
-<div class="modal fade" id="employeeModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="employeeForm">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="employeeModalTitle">Nhân viên</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="empId" value="0" />
-
-                    <div class="mb-3">
-                        <label class="form-label">Họ tên</label>
-                        <input type="text" class="form-control" id="fullName" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Phòng ban</label>
-                        <input type="text" class="form-control" id="department" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Lương</label>
-                        <input type="number" step="1000" class="form-control" id="salary" required />
-                    </div>
-
-                    <div id="modalError" class="text-danger small"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu lại</button>
-                </div>
-            </form>
+<section class="employee-page"
+         id="employeePage"
+         data-list-url="@Url.Action("GetAll", "Employees")"
+         data-item-url="@Url.Action("GetById", "Employees")"
+         data-create-url="@Url.Action("Create", "Employees")"
+         data-update-url="@Url.Action("Update", "Employees")"
+         data-delete-url="@Url.Action("Delete", "Employees")">
+    <header class="employee-heading">
+        <div>
+            <p class="employee-eyebrow">Bài thực hành ASP.NET Core MVC</p>
+            <h1>Quản lý nhân viên</h1>
+            <p class="employee-subtitle">CRUD không tải lại trang, dùng fetch API và SQLite.</p>
         </div>
-    </div>
-</div>
+        <button class="employee-button employee-button-primary" type="button" id="addEmployeeButton">
+            Thêm nhân viên
+        </button>
+    </header>
 
-<!-- MODAL 2: XÁC NHẬN XÓA -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Xác nhận xóa</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="deleteEmpId" />
-                Bạn có chắc muốn xóa <strong id="deleteEmpName"></strong>?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Không</button>
-                <button type="button" class="btn btn-danger btn-sm" id="btnConfirmDelete">Xóa</button>
-            </div>
-        </div>
+    <div class="employee-notice" id="employeeNotice" role="status" aria-live="polite" hidden></div>
+
+    <div class="employee-table-wrap">
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Họ tên</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phòng ban</th>
+                    <th scope="col">Lương</th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="employeeTableBody">
+                <tr><td colspan="6">Đang tải dữ liệu...</td></tr>
+            </tbody>
+        </table>
     </div>
-</div>
+</section>
+
+<dialog class="employee-dialog" id="employeeDialog" aria-labelledby="employeeDialogTitle">
+    <form id="employeeForm" novalidate>
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" />
+        <header class="employee-dialog-heading">
+            <h2 id="employeeDialogTitle">Thêm nhân viên</h2>
+            <button class="employee-icon-button" type="button" data-close-dialog aria-label="Đóng">×</button>
+        </header>
+
+        <label class="employee-field">
+            <span>Họ tên</span>
+            <input name="fullName" type="text" maxlength="120" autocomplete="name" required />
+            <small data-error-for="fullname"></small>
+        </label>
+        <label class="employee-field">
+            <span>Email</span>
+            <input name="email" type="email" maxlength="254" autocomplete="email" required />
+            <small data-error-for="email"></small>
+        </label>
+        <label class="employee-field">
+            <span>Phòng ban</span>
+            <input name="department" type="text" maxlength="80" required />
+            <small data-error-for="department"></small>
+        </label>
+        <label class="employee-field">
+            <span>Lương (VND)</span>
+            <input name="salary" type="number" min="0" step="1000" required />
+            <small data-error-for="salary"></small>
+        </label>
+        <p class="employee-form-error" id="employeeFormError" role="alert"></p>
+
+        <footer class="employee-dialog-actions">
+            <button class="employee-button" type="button" data-close-dialog>Hủy</button>
+            <button class="employee-button employee-button-primary" type="submit" id="saveEmployeeButton">Lưu nhân viên</button>
+        </footer>
+    </form>
+</dialog>
+
+@section Scripts {
+    <script src="~/js/employees.js" asp-append-version="true"></script>
+}

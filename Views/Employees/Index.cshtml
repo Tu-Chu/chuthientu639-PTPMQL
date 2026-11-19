@@ -1,0 +1,89 @@
+@{
+    ViewData["Title"] = "Quản lý Nhân viên (Modal + AJAX)";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Danh sách nhân viên</h2>
+        <button type="button" class="btn btn-primary" id="btnAddNew">+ Thêm nhân viên</button>
+    </div>
+
+    <div id="alertBox" class="alert alert-success d-none" role="alert"></div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Phòng ban</th>
+                <th>Lương</th>
+                <th style="width: 170px;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody id="employeeTbody"></tbody>
+    </table>
+</div>
+
+<!-- MODAL 1: THÊM / SỬA -->
+<div class="modal fade" id="employeeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="employeeForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="employeeModalTitle">Nhân viên</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="empId" value="0" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Họ tên</label>
+                        <input type="text" class="form-control" id="fullName" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Phòng ban</label>
+                        <input type="text" class="form-control" id="department" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Lương</label>
+                        <input type="number" step="1000" class="form-control" id="salary" required />
+                    </div>
+
+                    <div id="modalError" class="text-danger small"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Lưu lại</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL 2: XÁC NHẬN XÓA -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận xóa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="deleteEmpId" />
+                Bạn có chắc muốn xóa <strong id="deleteEmpName"></strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Không</button>
+                <button type="button" class="btn btn-danger btn-sm" id="btnConfirmDelete">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>

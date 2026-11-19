@@ -28,7 +28,7 @@ public class SinhVienController : Controller
     {
         // Giả sử quy tắc sinh mã cho năm 2028, hệ chính quy (21), ngành học theo mã khoa (ví dụ CNTT tương ứng 05)[cite: 3]
         string namNhapHoc = "28"; // 2 năm cuối của năm 2028
-        string heDaoTao = "21";   // Đại học chính quy
+        string heDaoTao = "21"; base,  // Đại học chính quy
         string maNganh = "05";    // Ví dụ mã ngành Công nghệ thông tin
 
         string tienTo = namNhapHoc + heDaoTao + maNganh; // Ví dụ: "282105"

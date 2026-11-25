@@ -18,6 +18,8 @@ await using (var scope = app.Services.CreateAsyncScope())
 
     var productDbContext = scope.ServiceProvider.GetRequiredService<MvcAjaxCrud.Data.AppDbContext>();
     await productDbContext.Database.EnsureCreatedAsync();
+    await productDbContext.Database.ExecuteSqlRawAsync(
+        "CREATE TABLE IF NOT EXISTS Products (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, Price TEXT NOT NULL, Stock INTEGER NOT NULL);");
 }
 
 // Configure the HTTP request pipeline.

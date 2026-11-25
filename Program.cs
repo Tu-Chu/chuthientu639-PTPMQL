@@ -15,6 +15,9 @@ await using (var scope = app.Services.CreateAsyncScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.EnsureCreatedAsync();
+
+    var productDbContext = scope.ServiceProvider.GetRequiredService<MvcAjaxCrud.Data.AppDbContext>();
+    await productDbContext.Database.EnsureCreatedAsync();
 }
 
 // Configure the HTTP request pipeline.

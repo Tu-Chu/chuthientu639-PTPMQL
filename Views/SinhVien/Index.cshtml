@@ -1,0 +1,53 @@
+@model DemoMVC.Models.PagedResult<DemoMVC.Models.SinhVien>
+
+@{ ViewData["Title"] = "Danh sách sinh viên"; }
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Danh sách sinh viên</h1>
+    <a asp-action="Create" class="btn btn-primary">Thêm sinh viên</a>
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-7">
+        <input name="search" value="@Model.Search" class="form-control" placeholder="Tìm theo mã, họ tên hoặc khoa" />
+    </div>
+    <div class="col-md-3">
+        <select name="pageSize" class="form-select">
+            @foreach (var size in new[] { 5, 10, 20, 50 })
+            {
+                <option value="@size" selected="@(Model.PageSize == size)">@size dòng</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2"><button class="btn btn-secondary w-100">Tìm kiếm</button></div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead><tr><th>Mã sinh viên</th><th>Họ tên</th><th>Khoa</th></tr></thead>
+    <tbody>
+    @if (Model.Items.Count == 0)
+    {
+        <tr><td colspan="3" class="text-center">Không tìm thấy dữ liệu phù hợp.</td></tr>
+    }
+    else
+    {
+        @foreach (var item in Model.Items)
+        {
+            <tr><td>@item.MaSinhVien</td><td>@item.HoTen</td><td>@item.Khoa?.TenKhoa</td></tr>
+        }
+    }
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-between align-items-center">
+    @{ var first = Model.TotalCount == 0 ? 0 : (Model.Page - 1) * Model.PageSize + 1; var last = Math.Min(Model.Page * Model.PageSize, Model.TotalCount); }
+    <span>Hiển thị @first-@last trong @Model.TotalCount sinh viên</span>
+    <nav><ul class="pagination mb-0">
+        <li class="page-item @(Model.Page <= 1 ? "disabled" : null)"><a class="page-link" asp-action="Index" asp-route-search="@Model.Search" asp-route-page="@(Model.Page - 1)" asp-route-pageSize="@Model.PageSize">Trước</a></li>
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.Page ? "active" : null)"><a class="page-link" asp-action="Index" asp-route-search="@Model.Search" asp-route-page="@i" asp-route-pageSize="@Model.PageSize">@i</a></li>
+        }
+        <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : null)"><a class="page-link" asp-action="Index" asp-route-search="@Model.Search" asp-route-page="@(Model.Page + 1)" asp-route-pageSize="@Model.PageSize">Sau</a></li>
+    </ul></nav>
+</div>

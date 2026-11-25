@@ -13,6 +13,47 @@ public class SinhVienController : Controller
         _context = context;
     }
 
+    // GET: SinhVien
+    public async Task<IActionResult> Index(string? search, int page = 1, int pageSize = 10)
+    {
+        var allowedPageSizes = new[] { 5, 10, 20, 50 };
+        if (!allowedPageSizes.Contains(pageSize)) pageSize = 10;
+
+        var query = _context.SinhVien
+            .Include(sinhVien => sinhVien.Khoa)
+            .AsNoTracking();
+        var searchTerm = search?.Trim();
+
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            query = query.Where(sinhVien =>
+                sinhVien.MaSinhVien.Contains(searchTerm) ||
+                sinhVien.HoTen.Contains(searchTerm) ||
+                sinhVien.MaKhoa.Contains(searchTerm) ||
+                sinhVien.Khoa.TenKhoa.Contains(searchTerm));
+        }
+
+        var totalCount = await query.CountAsync();
+        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+        page = Math.Clamp(page, 1, Math.Max(totalPages, 1));
+
+        var items = await query
+            .OrderByDescending(sinhVien => sinhVien.MaSinhVien)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return View(new PagedResult<SinhVien>
+        {
+            Items = items,
+            TotalCount = totalCount,
+            Page = page,
+            PageSize = pageSize,
+            TotalPages = totalPages,
+            Search = searchTerm ?? string.Empty
+        });
+    }
+
     // GET: SinhVien/Create
     public IActionResult Create()
     {

@@ -23,12 +23,41 @@ namespace MvcAjaxCrud.Controllers
 
         // READ: Lấy danh sách sản phẩm
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(string? search, int page = 1, int pageSize = 10)
         {
-            var products = await _context.Products
-                .OrderByDescending(p => p.Id)
+            var allowedPageSizes = new[] { 5, 10, 20, 50 };
+            if (!allowedPageSizes.Contains(pageSize))
+            {
+                pageSize = 10;
+            }
+
+            var query = _context.Products.AsNoTracking();
+            var searchTerm = search?.Trim();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(product => product.Name.Contains(searchTerm));
+            }
+
+            var totalCount = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            page = Math.Clamp(page, 1, Math.Max(totalPages, 1));
+
+            var items = await query
+                .OrderByDescending(product => product.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
-            return Json(products);
+
+            return Json(new
+            {
+                items,
+                totalCount,
+                page,
+                pageSize,
+                totalPages,
+                search = searchTerm ?? string.Empty
+            });
         }
 
         // READ ONE: Lấy 1 sản phẩm để sửa

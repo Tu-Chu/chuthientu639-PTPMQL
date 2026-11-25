@@ -22,6 +22,26 @@
 
     <div class="employee-notice" id="employeeNotice" role="status" aria-live="polite" hidden></div>
 
+    <div class="employee-list-controls">
+        <label class="employee-search-field" for="employeeSearch">
+            <span>Tìm nhân viên</span>
+            <input id="employeeSearch"
+                   type="search"
+                   maxlength="100"
+                   autocomplete="off"
+                   placeholder="Họ tên, email hoặc phòng ban" />
+        </label>
+        <label class="employee-page-size-field" for="employeePageSize">
+            <span>Số dòng</span>
+            <select id="employeePageSize">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
+        </label>
+    </div>
+
     <div class="employee-table-wrap">
         <table class="employee-table">
             <thead>
@@ -39,6 +59,15 @@
             </tbody>
         </table>
     </div>
+
+    <nav class="employee-pagination" aria-label="Phân trang danh sách nhân viên">
+        <p id="employeePaginationInfo" aria-live="polite"></p>
+        <div class="employee-pagination-actions">
+            <button class="employee-button" type="button" id="previousPageButton" disabled>Trang trước</button>
+            <span id="employeePageLabel" aria-current="page">Trang 1 / 1</span>
+            <button class="employee-button" type="button" id="nextPageButton" disabled>Trang sau</button>
+        </div>
+    </nav>
 </section>
 
 <dialog class="employee-dialog" id="employeeDialog" aria-labelledby="employeeDialogTitle">

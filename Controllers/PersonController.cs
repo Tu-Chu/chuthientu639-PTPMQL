@@ -14,9 +14,43 @@ namespace DemoMVC.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search, int page = 1, int pageSize = 10)
         {
-            return View(await _context.Person.ToListAsync());
+            var allowedPageSizes = new[] { 5, 10, 20, 50 };
+            if (!allowedPageSizes.Contains(pageSize))
+            {
+                pageSize = 10;
+            }
+
+            var query = _context.Person.AsNoTracking();
+            var searchTerm = search?.Trim();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(person =>
+                    person.FullName.Contains(searchTerm) ||
+                    person.Address.ToString().Contains(searchTerm));
+            }
+
+            var totalCount = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            page = Math.Clamp(page, 1, Math.Max(totalPages, 1));
+
+            var items = await query
+                .OrderByDescending(person => person.PersonId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return View(new PagedResult<Person>
+            {
+                Items = items,
+                TotalCount = totalCount,
+                Page = page,
+                PageSize = pageSize,
+                TotalPages = totalPages,
+                Search = searchTerm ?? string.Empty
+            });
         }
 
         public IActionResult Create()

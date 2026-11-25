@@ -369,7 +369,6 @@ D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\5xejjieq4f-{0}-2z0ns9nrw
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\4zkt78b4uj-{0}-muycvpuwrr-muycvpuwrr.gz
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\9oii8m2kst-{0}-87fc7y1x7t-87fc7y1x7t.gz
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\spxu58lbjx-{0}-mlv21k5csn-mlv21k5csn.gz
-D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\90yx8yt10h-{0}-4m9ryivpiw-4m9ryivpiw.gz
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\q1zz9avq9c-{0}-vmxe2v1iue-vmxe2v1iue.gz
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\h0opwfbn65-{0}-vmxe2v1iue-vmxe2v1iue.gz
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\staticwebassets.build.json
@@ -383,3 +382,5 @@ D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\refint\DemoMVC.dll
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.pdb
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.genruntimeconfig.cache
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\ref\DemoMVC.dll
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\90yx8yt10h-{0}-dqp9aa95ec-dqp9aa95ec.gz
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\bns7tdtbxf-{0}-yr2ctwcgiv-yr2ctwcgiv.gz

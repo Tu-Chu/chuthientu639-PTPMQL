@@ -384,3 +384,4 @@ D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\DemoMVC.genruntimeconfig.cache
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\ref\DemoMVC.dll
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\90yx8yt10h-{0}-dqp9aa95ec-dqp9aa95ec.gz
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\bns7tdtbxf-{0}-yr2ctwcgiv-yr2ctwcgiv.gz
+D:\Netcore\Netcore\DemoMVC\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

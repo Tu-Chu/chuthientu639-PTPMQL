@@ -6,6 +6,7 @@ using MvcAjaxModalCrud.Models;
 
 namespace MvcAjaxModalCrud.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -79,6 +80,7 @@ namespace MvcAjaxModalCrud.Controllers
         // CREATE: Thêm mới từ Modal
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] EmployeeInput input)
         {
             if (!ModelState.IsValid)
@@ -100,6 +102,7 @@ namespace MvcAjaxModalCrud.Controllers
         // UPDATE: Cập nhật từ Modal
         [HttpPut]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(int id, [FromBody] EmployeeInput input)
         {
             if (!ModelState.IsValid)
@@ -121,6 +124,7 @@ namespace MvcAjaxModalCrud.Controllers
         // DELETE: Xóa sau khi xác nhận trên Delete Modal
         [HttpDelete]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var emp = await _context.Employees.FindAsync(id);

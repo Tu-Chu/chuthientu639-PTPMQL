@@ -1,4 +1,5 @@
 // Controllers/ProductsController.cs
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvcAjaxCrud.Data;
@@ -6,6 +7,7 @@ using MvcAjaxCrud.Models;
 
 namespace MvcAjaxCrud.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly AppDbContext _context;
@@ -73,6 +75,7 @@ namespace MvcAjaxCrud.Controllers
 
         // CREATE: Thêm sản phẩm mới
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] Product product)
         {
             if (!ModelState.IsValid)
@@ -86,6 +89,7 @@ namespace MvcAjaxCrud.Controllers
 
         // UPDATE: Cập nhật sản phẩm
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(int id, [FromBody] Product product)
         {
             if (id != product.Id)
@@ -108,6 +112,7 @@ namespace MvcAjaxCrud.Controllers
 
         // DELETE: Xóa sản phẩm
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _context.Products.FindAsync(id);

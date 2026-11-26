@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DemoMVC.Data;
 using DemoMVC.Models;
 
+[Authorize]
 public class SinhVienController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -55,6 +57,7 @@ public class SinhVienController : Controller
     }
 
     // GET: SinhVien/Create
+    [Authorize(Roles = "Admin")]
     public IActionResult Create()
     {
         // Đổ dữ liệu các Khoa ra DropdownList để nhập liệu[cite: 3]
@@ -64,6 +67,7 @@ public class SinhVienController : Controller
 
     // POST: SinhVien/Create
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("HoTen,MaKhoa")] SinhVien sinhVien)
     {

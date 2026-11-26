@@ -1,8 +1,10 @@
 namespace DemoMVC.Controllers
 {
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [AllowAnonymous]
     public class LessonController : Controller
     {
         public IActionResult Lesson1()

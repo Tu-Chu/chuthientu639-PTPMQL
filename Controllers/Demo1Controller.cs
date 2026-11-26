@@ -1,8 +1,10 @@
 namespace Demo1Controller.Controllers
 {
     using System.Threading.Tasks.Dataflow;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [AllowAnonymous]
     public class Demo1Controller : Controller
     {
         public IActionResult Index()

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -57,28 +57,26 @@ public class SinhVienController : Controller
     }
 
     // GET: SinhVien/Create
-    [Authorize(Roles = "Admin")]
     public IActionResult Create()
     {
-        // Đổ dữ liệu các Khoa ra DropdownList để nhập liệu[cite: 3]
+        // Äá»• dá»¯ liá»‡u cÃ¡c Khoa ra DropdownList Ä‘á»ƒ nháº­p liá»‡u[cite: 3]
         ViewData["MaKhoa"] = new SelectList(_context.Khoa, "MaKhoa", "TenKhoa");
         return View();
     }
 
     // POST: SinhVien/Create
     [HttpPost]
-    [Authorize(Roles = "Admin")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("HoTen,MaKhoa")] SinhVien sinhVien)
     {
-        // Giả sử quy tắc sinh mã cho năm 2028, hệ chính quy (21), ngành học theo mã khoa (ví dụ CNTT tương ứng 05)[cite: 3]
-        string namNhapHoc = "28"; // 2 năm cuối của năm 2028
-        string heDaoTao = "21"; // Đại học chính quy
-        string maNganh = "05";    // Ví dụ mã ngành Công nghệ thông tin
+        // Giáº£ sá»­ quy táº¯c sinh mÃ£ cho nÄƒm 2028, há»‡ chÃ­nh quy (21), ngÃ nh há»c theo mÃ£ khoa (vÃ­ dá»¥ CNTT tÆ°Æ¡ng á»©ng 05)[cite: 3]
+        string namNhapHoc = "28"; // 2 nÄƒm cuá»‘i cá»§a nÄƒm 2028
+        string heDaoTao = "21"; // Äáº¡i há»c chÃ­nh quy
+        string maNganh = "05";    // VÃ­ dá»¥ mÃ£ ngÃ nh CÃ´ng nghá»‡ thÃ´ng tin
 
-        string tienTo = namNhapHoc + heDaoTao + maNganh; // Ví dụ: "282105"
+        string tienTo = namNhapHoc + heDaoTao + maNganh; // VÃ­ dá»¥: "282105"
 
-        // Tìm mã sinh viên lớn nhất hiện tại bắt đầu bằng tiền tố này để lấy số thứ tự tiếp theo
+        // TÃ¬m mÃ£ sinh viÃªn lá»›n nháº¥t hiá»‡n táº¡i báº¯t Ä‘áº§u báº±ng tiá»n tá»‘ nÃ y Ä‘á»ƒ láº¥y sá»‘ thá»© tá»± tiáº¿p theo
         var svCuoiCung = await _context.SinhVien
             .Where(s => s.MaSinhVien.StartsWith(tienTo))
             .OrderByDescending(s => s.MaSinhVien)
@@ -87,7 +85,7 @@ public class SinhVienController : Controller
         int stt = 1;
         if (svCuoiCung != null)
         {
-            // Lấy 4 chữ số cuối ra và chuyển thành số nguyên, sau đó cộng thêm 1
+            // Láº¥y 4 chá»¯ sá»‘ cuá»‘i ra vÃ  chuyá»ƒn thÃ nh sá»‘ nguyÃªn, sau Ä‘Ã³ cá»™ng thÃªm 1
             string lastFourDigits = svCuoiCung.MaSinhVien.Substring(svCuoiCung.MaSinhVien.Length - 4);
             if (int.TryParse(lastFourDigits, out int sttCuoi))
             {
@@ -95,7 +93,7 @@ public class SinhVienController : Controller
             }
         }
 
-        // Ghép lại thành mã sinh viên hoàn chỉnh (Định dạng 4 chữ số cuối, ví dụ: 0199 -> 0200)[cite: 3]
+        // GhÃ©p láº¡i thÃ nh mÃ£ sinh viÃªn hoÃ n chá»‰nh (Äá»‹nh dáº¡ng 4 chá»¯ sá»‘ cuá»‘i, vÃ­ dá»¥: 0199 -> 0200)[cite: 3]
         sinhVien.MaSinhVien = tienTo + stt.ToString("D4");
 
         if (ModelState.IsValid)

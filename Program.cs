@@ -1,11 +1,18 @@
 using DemoMVC.Data;
+using DemoMVC.Services;
+using DemoMVC.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<DynamicPermissionFilter>();
+});
+builder.Services.AddScoped<IEmailSender, SmtpEmailSender>();
+builder.Services.AddScoped<DynamicPermissionFilter>();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
@@ -20,6 +27,7 @@ builder.Services
         options.Password.RequireNonAlphanumeric = true;
         options.Password.RequiredLength = 8;
         options.User.RequireUniqueEmail = true;
+        options.SignIn.RequireConfirmedEmail = true;
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
@@ -65,6 +73,19 @@ await using (var scope = app.Services.CreateAsyncScope())
         await dbContext.Database.ExecuteSqlRawAsync(sql);
     }
 
+    await dbContext.Database.ExecuteSqlRawAsync(@"
+        CREATE TABLE IF NOT EXISTS RolePermissions (
+            Id INTEGER NOT NULL CONSTRAINT PK_RolePermissions PRIMARY KEY AUTOINCREMENT,
+            RoleId TEXT NOT NULL,
+            ControllerName TEXT NOT NULL,
+            ActionName TEXT NOT NULL,
+            HttpMethod TEXT NOT NULL DEFAULT 'ANY'
+        );
+        CREATE INDEX IF NOT EXISTS IX_RolePermissions_RoleId ON RolePermissions(RoleId);
+        CREATE UNIQUE INDEX IF NOT EXISTS IX_RolePermissions_Action
+        ON RolePermissions(RoleId, ControllerName, ActionName, HttpMethod);
+    ");
+
     var productDbContext = scope.ServiceProvider.GetRequiredService<MvcAjaxCrud.Data.AppDbContext>();
     await productDbContext.Database.EnsureCreatedAsync();
     await productDbContext.Database.ExecuteSqlRawAsync(
@@ -100,6 +121,25 @@ await using (var scope = app.Services.CreateAsyncScope())
     else if (!await userManager.IsInRoleAsync(admin, "Admin"))
     {
         await userManager.AddToRoleAsync(admin, "Admin");
+    }
+
+    foreach (var permission in new[]
+    {
+        "Employees|Index|ANY",
+        "Employees|GetAll|GET",
+        "Employees|GetById|GET",
+        "Person|Index|ANY",
+        "Products|Index|ANY",
+        "Products|GetAll|GET",
+        "Products|GetById|GET",
+        "SinhVien|Index|ANY"
+    })
+    {
+        var parts = permission.Split('|');
+        await dbContext.Database.ExecuteSqlRawAsync(
+            "INSERT OR IGNORE INTO RolePermissions (RoleId, ControllerName, ActionName, HttpMethod) " +
+            "SELECT Id, {0}, {1}, {2} FROM AspNetRoles WHERE Name = 'User'",
+            parts[0], parts[1], parts[2]);
     }
 }
 

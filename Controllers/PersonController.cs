@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DemoMVC.Data;
 using DemoMVC.Models;
@@ -55,13 +55,11 @@ namespace DemoMVC.Controllers
             });
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -77,7 +75,6 @@ namespace DemoMVC.Controllers
             return View(person);
         }
 
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var person = await _context.Person.FindAsync(id);
@@ -90,7 +87,6 @@ namespace DemoMVC.Controllers
             return View(person);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
@@ -127,7 +123,6 @@ namespace DemoMVC.Controllers
             return View(person);
         }
 
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var person = await _context.Person
@@ -142,7 +137,6 @@ namespace DemoMVC.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

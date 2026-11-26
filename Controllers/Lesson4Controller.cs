@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using DemoMVC.Models;
 
 namespace DemoMVC.Controllers
 {
+    [AllowAnonymous]
     public class Lesson4Controller : Controller
     {
         // 1. GET: Hiển thị form ban đầu

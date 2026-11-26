@@ -1,0 +1,86 @@
+@model DemoMVC.Models.DynamicPermissionRoleViewModel
+@{
+    ViewData["Title"] = "Phân quyền động";
+    var roles = (IEnumerable<dynamic>)ViewBag.Roles;
+}
+
+<div class="permission-page">
+    <div class="permission-heading">
+        <div>
+            <p class="permission-eyebrow">Authorization matrix</p>
+            <h1>Phân quyền theo Action</h1>
+            <p>Bật hoặc tắt quyền truy cập cho từng Controller và Action.</p>
+        </div>
+        <a asp-controller="Roles" asp-action="Index" class="permission-button permission-button-secondary">← Quản lý Role</a>
+    </div>
+
+    @if (TempData["StatusMessage"] != null)
+    {
+        <div class="permission-alert">@TempData["StatusMessage"]</div>
+    }
+
+    <form method="get" asp-action="Matrix" class="permission-role-picker">
+        <label for="roleId">Chọn Role</label>
+        <select id="roleId" name="roleId" class="form-select" onchange="this.form.submit()">
+            @foreach (var role in roles)
+            {
+                <option value="@role.Id" selected="@(role.Id == Model.RoleId)">@role.Name</option>
+            }
+        </select>
+    </form>
+
+    <form asp-action="Update" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="roleId" value="@Model.RoleId" />
+
+        <div class="permission-toolbar">
+            <div>
+                <span class="permission-role-badge">@Model.RoleName</span>
+                <strong>@Model.Actions.Count</strong> action khả dụng
+            </div>
+            <div class="permission-toolbar-actions">
+                <button type="button" class="permission-button permission-button-secondary" id="selectAllPermissions">Chọn tất cả</button>
+                <button type="button" class="permission-button permission-button-secondary" id="clearAllPermissions">Bỏ chọn</button>
+                <button type="submit" class="permission-button permission-button-primary">Lưu phân quyền</button>
+            </div>
+        </div>
+
+        <div class="permission-grid">
+            @foreach (var group in Model.Actions.GroupBy(action => action.ControllerName).OrderBy(group => group.Key))
+            {
+                <section class="permission-controller-card">
+                    <header>
+                        <span class="permission-controller-icon">@group.Key.Substring(0, 1)</span>
+                        <div>
+                            <h2>@group.Key</h2>
+                            <p>@group.Count() action</p>
+                        </div>
+                    </header>
+                    <div class="permission-action-list">
+                        @foreach (var action in group)
+                        {
+                            var key = $"{action.ControllerName}|{action.ActionName}|{action.HttpMethod}";
+                            <label class="permission-action">
+                                <span>
+                                    <strong>@action.ActionName</strong>
+                                    <small>@action.HttpMethod</small>
+                                </span>
+                                <input class="permission-checkbox" type="checkbox" name="permissions" value="@key" checked="@action.IsAssigned" />
+                            </label>
+                        }
+                    </div>
+                </section>
+            }
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+<script>
+(() => {
+    const checkboxes = [...document.querySelectorAll('.permission-checkbox')];
+    document.querySelector('#selectAllPermissions')?.addEventListener('click', () => checkboxes.forEach(box => box.checked = true));
+    document.querySelector('#clearAllPermissions')?.addEventListener('click', () => checkboxes.forEach(box => box.checked = false));
+})();
+</script>
+}

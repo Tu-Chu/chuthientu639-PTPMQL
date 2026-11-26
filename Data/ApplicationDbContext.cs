@@ -16,5 +16,6 @@ namespace DemoMVC.Data
         public DbSet<Khoa> Khoa { get; set; }
         public DbSet<SinhVien> SinhVien { get; set; }
         public DbSet<Employee> Employees => Set<Employee>();
+        public DbSet<RolePermission> RolePermissions { get; set; }
     }
 }

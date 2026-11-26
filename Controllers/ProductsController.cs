@@ -1,4 +1,4 @@
-// Controllers/ProductsController.cs
+﻿// Controllers/ProductsController.cs
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,13 +17,13 @@ namespace MvcAjaxCrud.Controllers
             _context = context;
         }
 
-        // Trang chính chứa bảng và modal
+        // Trang chÃ­nh chá»©a báº£ng vÃ  modal
         public IActionResult Index()
         {
             return View();
         }
 
-        // READ: Lấy danh sách sản phẩm
+        // READ: Láº¥y danh sÃ¡ch sáº£n pháº©m
         [HttpGet]
         public async Task<IActionResult> GetAll(string? search, int page = 1, int pageSize = 10)
         {
@@ -62,20 +62,19 @@ namespace MvcAjaxCrud.Controllers
             });
         }
 
-        // READ ONE: Lấy 1 sản phẩm để sửa
+        // READ ONE: Láº¥y 1 sáº£n pháº©m Ä‘á»ƒ sá»­a
         [HttpGet]
         public async Task<IActionResult> GetById(int id)
         {
             var product = await _context.Products.FindAsync(id);
             if (product == null)
-                return NotFound(new { message = "Không tìm thấy sản phẩm." });
+                return NotFound(new { message = "KhÃ´ng tÃ¬m tháº¥y sáº£n pháº©m." });
 
             return Json(product);
         }
 
-        // CREATE: Thêm sản phẩm mới
+        // CREATE: ThÃªm sáº£n pháº©m má»›i
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] Product product)
         {
             if (!ModelState.IsValid)
@@ -84,45 +83,43 @@ namespace MvcAjaxCrud.Controllers
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Thêm thành công", data = product });
+            return Ok(new { message = "ThÃªm thÃ nh cÃ´ng", data = product });
         }
 
-        // UPDATE: Cập nhật sản phẩm
+        // UPDATE: Cáº­p nháº­t sáº£n pháº©m
         [HttpPut]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(int id, [FromBody] Product product)
         {
             if (id != product.Id)
-                return BadRequest(new { message = "ID không khớp." });
+                return BadRequest(new { message = "ID khÃ´ng khá»›p." });
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var existing = await _context.Products.FindAsync(id);
             if (existing == null)
-                return NotFound(new { message = "Không tìm thấy sản phẩm." });
+                return NotFound(new { message = "KhÃ´ng tÃ¬m tháº¥y sáº£n pháº©m." });
 
             existing.Name = product.Name;
             existing.Price = product.Price;
             existing.Stock = product.Stock;
 
             await _context.SaveChangesAsync();
-            return Ok(new { message = "Cập nhật thành công", data = existing });
+            return Ok(new { message = "Cáº­p nháº­t thÃ nh cÃ´ng", data = existing });
         }
 
-        // DELETE: Xóa sản phẩm
+        // DELETE: XÃ³a sáº£n pháº©m
         [HttpDelete]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _context.Products.FindAsync(id);
             if (product == null)
-                return NotFound(new { message = "Không tìm thấy sản phẩm." });
+                return NotFound(new { message = "KhÃ´ng tÃ¬m tháº¥y sáº£n pháº©m." });
 
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Xóa thành công" });
+            return Ok(new { message = "XÃ³a thÃ nh cÃ´ng" });
         }
     }
 }

@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoMVC.Controllers
 {
+    [AllowAnonymous]
     public class QuanlysinhvienController : Controller
     {
         [HttpGet]

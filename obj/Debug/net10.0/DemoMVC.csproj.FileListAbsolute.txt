@@ -307,7 +307,6 @@ D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\scopedcss\bundle\DemoMVC.styles.css
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\scopedcss\projectbundle\DemoMVC.bundle.scp.css
-D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\3xqpwvxjmo-{0}-u907jczzcd-u907jczzcd.gz
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\wxksowlaa2-{0}-61n19gt1b8-61n19gt1b8.gz
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\i7pifeklos-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\ffshl3hb68-{0}-bqjiyaj88i-bqjiyaj88i.gz
@@ -385,3 +384,4 @@ D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\ref\DemoMVC.dll
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\90yx8yt10h-{0}-dqp9aa95ec-dqp9aa95ec.gz
 D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\bns7tdtbxf-{0}-yr2ctwcgiv-yr2ctwcgiv.gz
 D:\Netcore\Netcore\DemoMVC\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Netcore\Netcore\DemoMVC\obj\Debug\net10.0\compressed\3xqpwvxjmo-{0}-baa2dnxb8k-baa2dnxb8k.gz

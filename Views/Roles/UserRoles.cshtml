@@ -1,0 +1,51 @@
+@model List<DemoMVC.Models.UserRoleViewModel>
+@{ ViewData["Title"] = "Gán Role người dùng"; }
+
+<div class="role-admin-page">
+    <div class="role-admin-heading">
+        <div>
+            <p class="role-eyebrow">Phân quyền tài khoản</p>
+            <h1>Gán Role cho người dùng</h1>
+        </div>
+        <a asp-action="Index" class="role-button role-button-secondary">← Quản lý role</a>
+    </div>
+
+    @if (TempData["StatusMessage"] != null)
+    {
+        <div class="role-alert role-alert-success">@TempData["StatusMessage"]</div>
+    }
+    @if (TempData["StatusError"] != null)
+    {
+        <div class="role-alert role-alert-danger">@TempData["StatusError"]</div>
+    }
+
+    <div class="role-table-card">
+        <table class="role-table user-role-table">
+            <thead><tr><th>Email người dùng</th><th>Role được gán</th><th></th></tr></thead>
+            <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td><strong>@user.Email</strong></td>
+                    <td colspan="2">
+                        <form asp-action="UpdateUserRoles" method="post" class="d-flex align-items-center justify-content-between gap-3">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="userId" value="@user.UserId" />
+                            <div class="role-checkbox-list">
+                                @foreach (var role in user.Roles)
+                                {
+                                    <label class="role-checkbox">
+                                        <input type="checkbox" name="roleNames" value="@role.RoleName" checked="@role.IsAssigned" />
+                                        <span>@role.RoleName</span>
+                                    </label>
+                                }
+                            </div>
+                            <button type="submit" class="role-button role-button-primary role-button-small">Lưu</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+@model DemoMVC.Models.RoleEditViewModel
+@{ ViewData["Title"] = "Tạo Role"; }
+
+<div class="role-admin-page role-admin-form-page">
+    <div class="role-form-card">
+        <h1>Tạo Role mới</h1>
+        <p class="text-muted">Role giúp phân quyền truy cập các chức năng quản trị.</p>
+        <form asp-action="Create" method="post" class="role-form">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control role-input" placeholder="Ví dụ: Manager" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+            <div class="role-form-actions">
+                <a asp-action="Index" class="role-button role-button-secondary">Hủy</a>
+                <button type="submit" class="role-button role-button-primary">Tạo role</button>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts { @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); } }

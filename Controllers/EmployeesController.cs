@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DemoMVC.Data;
@@ -21,7 +21,7 @@ namespace MvcAjaxModalCrud.Controllers
             return View();
         }
 
-        // READ: Lấy danh sách nhân viên
+        // READ: Láº¥y danh sÃ¡ch nhÃ¢n viÃªn
         [HttpGet]
         public async Task<IActionResult> GetAll(
             [FromQuery] string? search,
@@ -66,21 +66,20 @@ namespace MvcAjaxModalCrud.Controllers
             });
         }
 
-        // READ ONE: Lấy dữ liệu nhân viên để đổ vào Modal Sửa
+        // READ ONE: Láº¥y dá»¯ liá»‡u nhÃ¢n viÃªn Ä‘á»ƒ Ä‘á»• vÃ o Modal Sá»­a
         [HttpGet]
         public async Task<IActionResult> GetById(int id)
         {
             var emp = await _context.Employees.FindAsync(id);
             if (emp == null)
-                return NotFound(new { message = "Không tìm thấy nhân viên." });
+                return NotFound(new { message = "KhÃ´ng tÃ¬m tháº¥y nhÃ¢n viÃªn." });
 
             return Json(emp);
         }
 
-        // CREATE: Thêm mới từ Modal
+        // CREATE: ThÃªm má»›i tá»« Modal
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] EmployeeInput input)
         {
             if (!ModelState.IsValid)
@@ -96,13 +95,12 @@ namespace MvcAjaxModalCrud.Controllers
             _context.Employees.Add(emp);
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Thêm nhân viên thành công", data = emp });
+            return Ok(new { message = "ThÃªm nhÃ¢n viÃªn thÃ nh cÃ´ng", data = emp });
         }
 
-        // UPDATE: Cập nhật từ Modal
+        // UPDATE: Cáº­p nháº­t tá»« Modal
         [HttpPut]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update(int id, [FromBody] EmployeeInput input)
         {
             if (!ModelState.IsValid)
@@ -110,7 +108,7 @@ namespace MvcAjaxModalCrud.Controllers
 
             var existing = await _context.Employees.FindAsync(id);
             if (existing == null)
-                return NotFound(new { message = "Không tìm thấy nhân viên." });
+                return NotFound(new { message = "KhÃ´ng tÃ¬m tháº¥y nhÃ¢n viÃªn." });
 
             existing.FullName = input.FullName;
             existing.Email = input.Email;
@@ -118,23 +116,22 @@ namespace MvcAjaxModalCrud.Controllers
             existing.Salary = input.Salary;
 
             await _context.SaveChangesAsync();
-            return Ok(new { message = "Cập nhật thành công", data = existing });
+            return Ok(new { message = "Cáº­p nháº­t thÃ nh cÃ´ng", data = existing });
         }
 
-        // DELETE: Xóa sau khi xác nhận trên Delete Modal
+        // DELETE: XÃ³a sau khi xÃ¡c nháº­n trÃªn Delete Modal
         [HttpDelete]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var emp = await _context.Employees.FindAsync(id);
             if (emp == null)
-                return NotFound(new { message = "Không tìm thấy nhân viên." });
+                return NotFound(new { message = "KhÃ´ng tÃ¬m tháº¥y nhÃ¢n viÃªn." });
 
             _context.Employees.Remove(emp);
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Đã xóa nhân viên" });
+            return Ok(new { message = "ÄÃ£ xÃ³a nhÃ¢n viÃªn" });
         }
 
         private IActionResult ValidationError()
@@ -149,7 +146,7 @@ namespace MvcAjaxModalCrud.Controllers
 
             return BadRequest(new
             {
-                message = "Dữ liệu chưa hợp lệ. Vui lòng kiểm tra các trường bên dưới.",
+                message = "Dá»¯ liá»‡u chÆ°a há»£p lá»‡. Vui lÃ²ng kiá»ƒm tra cÃ¡c trÆ°á»ng bÃªn dÆ°á»›i.",
                 errors
             });
         }
